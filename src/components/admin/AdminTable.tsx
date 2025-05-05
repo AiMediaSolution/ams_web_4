@@ -40,13 +40,17 @@ export default function AdminTable({ data }: { data: DataType[] }) {
       {
         accessorKey: "image_url",
         header: "Image",
-        cell: ({ getValue }: any) => (
-          <img
-            src={getValue()}
-            alt="Preview"
-            className="w-16 h-16 object-cover rounded"
-          />
-        ),
+        cell: ({ getValue }: any) => {
+          const baseUrl = process.env.NEXT_PUBLIC_API_URL || "";
+          const imageUrl = `${baseUrl}${getValue()}`;
+          return (
+            <img
+              src={imageUrl}
+              alt="Preview"
+              className="w-28 h-16 object-cover rounded"
+            />
+          );
+        },
       },
       {
         accessorKey: "caption",

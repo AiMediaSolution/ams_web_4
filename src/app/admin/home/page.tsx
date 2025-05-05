@@ -35,20 +35,20 @@ const AdminHome = () => {
     for (let [key, value] of formData.entries()) {
       console.log(`${key}:`, value);
     }
-    // try {
-    //   const response = await fetchWithAuth(`${apiUrl}/admin/upload`, {
-    //     method: "POST",
-    //     body: formData,
-    //   });
-    //   if (response.ok) {
-    //     setShowModal(false);
-    //     fetchData(); // refresh table
-    //   } else {
-    //     alert("Failed to upload news");
-    //   }
-    // } catch (error) {
-    //   alert("An error occurred.");
-    // }
+    try {
+      const response = await fetchWithAuth(`${apiUrl}/admin/upload`, {
+        method: "POST",
+        body: formData,
+      });
+      if (response.ok) {
+        setShowModal(false);
+        fetchData(); // refresh table
+      } else {
+        alert("Failed to upload news");
+      }
+    } catch (error) {
+      alert("An error occurred.");
+    }
   };
 
   return (

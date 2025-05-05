@@ -64,6 +64,8 @@ export default function AddNewsModal({
         }));
         return;
       }
+      console.log("File selected:", file);
+
       setImageFile(file);
       setErrors((prev) => ({ ...prev, image: "" }));
     }
@@ -72,7 +74,6 @@ export default function AddNewsModal({
   const handleSubmit = () => {
     const { share_url, caption, date } = form;
     const newErrors = { share_url: "", caption: "", date: "", image: "" };
-
     if (!share_url) newErrors.share_url = "Share URL is required.";
     if (!caption) newErrors.caption = "Caption is required.";
     if (!date) newErrors.date = "Date is required.";
@@ -110,8 +111,11 @@ export default function AddNewsModal({
 
     const formData = new FormData();
     formData.append("type", type);
-    formData.append("video_id", videoId);
-    formData.append("date_update", formatsDate());
+    formData.append("id_socialMedia", videoId);
+    formData.append(
+      "date_update",
+      Math.floor(new Date(form.date).getTime() / 1000).toString()
+    );
     Object.entries(form).forEach(([key, val]) => formData.append(key, val));
     if (imageFile) formData.append("image", imageFile);
 
@@ -124,32 +128,42 @@ export default function AddNewsModal({
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center px-4">
       <div className="bg-white w-full max-w-5xl rounded-lg overflow-hidden shadow-xl">
         <div className="grid md:grid-cols-2">
-          {/* Upload Section */}
-          <div className="bg-gray-50 flex flex-col items-center justify-center p-6 border-r border-gray-200">
-            <div
-              className="w-full border-2 border-dashed border-cyan-400 hover:border-cyan-600 rounded-lg flex flex-col items-center justify-center p-6 text-center transition cursor-pointer"
-              onClick={() => document.getElementById("imageInput")?.click()}
-            >
-              {imagePreview ? (
-                <img
-                  src={imagePreview}
-                  alt="Preview"
-                  className="rounded-lg object-contain h-[200px] w-full mb-4"
-                />
-              ) : (
-                <>
-                  <FiUploadCloud className="text-5xl text-cyan-500 mb-3" />
-                  <p className="text-gray-700 font-semibold">
-                    Drag & Drop or click to upload image
-                  </p>
-                  <p className="text-xs text-gray-400 mt-1">
-                    JPG, PNG, GIF | Max 5MB
-                  </p>
-                </>
-              )}
-            </div>
-            {errors.image && (
-              <p className="text-red-500 text-sm mt-2">{errors.image}</p>
+          <div
+            className="w-full border-2 border-dashed border-cyan-400 hover:border-cyan-600 rounded-lg flex flex-col items-center justify-center p-6 text-center transition cursor-pointer"
+            onClick={() => document.getElementById("imageInput")?.click()}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => {
+              e.preventDefault();
+              const file = e.dataTransfer.files?.[0];
+              if (file) {
+                if (file.size > 5 * 1024 * 1024) {
+                  setErrors((prev) => ({
+                    ...prev,
+                    image: "Image must be under 5MB.",
+                  }));
+                  return;
+                }
+                setImageFile(file);
+                setErrors((prev) => ({ ...prev, image: "" }));
+              }
+            }}
+          >
+            {imagePreview ? (
+              <img
+                src={imagePreview}
+                alt="Preview"
+                className="rounded-lg object-contain h-[200px] w-full mb-4"
+              />
+            ) : (
+              <>
+                <FiUploadCloud className="text-5xl text-cyan-500 mb-3" />
+                <p className="text-gray-700 font-semibold">
+                  Drag & Drop or click to upload image
+                </p>
+                <p className="text-xs text-gray-400 mt-1">
+                  JPG, PNG, GIF | Max 5MB
+                </p>
+              </>
             )}
             <input
               id="imageInput"
@@ -159,8 +173,6 @@ export default function AddNewsModal({
               className="hidden"
             />
           </div>
-
-          {/* Form Section */}
           <div className="p-6 space-y-4">
             <h2 className="text-2xl font-bold mb-2 text-center">Add News</h2>
             <div className="grid gap-3">
@@ -195,7 +207,7 @@ export default function AddNewsModal({
                 <input
                   type="date"
                   value={
-                    form.date
+                    form.date && !isNaN(Date.parse(form.date))
                       ? new Date(form.date).toISOString().split("T")[0]
                       : ""
                   }
