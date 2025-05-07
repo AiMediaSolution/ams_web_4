@@ -7,11 +7,34 @@ interface TiktokCardProps {
   videoUrl: string;
   caption: string;
   date: string;
+  share_url: string;
+  imageUrl: string;
 }
 
-const TikTokCard = ({ videoUrl, caption, date }: TiktokCardProps) => {
+const TikTokCard = ({
+  videoUrl,
+  caption,
+  date,
+  share_url,
+  imageUrl,
+}: TiktokCardProps) => {
+  const truncateText = (text: string, maxLength: number) => {
+    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+  };
+  const fotmartDate = (timestamp: string) => {
+    const num = parseInt(timestamp);
+    const date = new Date(num * 1000);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
   return (
-    <div className="relative flex flex-col bg-white shadow-lg rounded-2xl overflow-hidden w-full max-w-[230px] mx-auto h-[451px]">
+    <div
+      className="relative flex flex-col bg-white shadow-lg rounded-2xl overflow-hidden w-full
+  max-w-full sm:max-w-[320px] md:max-w-[360px] lg:max-w-[230px] mx-auto h-[451px]"
+    >
       <div className="relative h-[356px]">
         <iframe
           className="w-full h-full border-0"
@@ -20,11 +43,11 @@ const TikTokCard = ({ videoUrl, caption, date }: TiktokCardProps) => {
         ></iframe>
       </div>
       <div className="absolute top-2 right-2 z-10">
-        <ShareActions imageUrl={"imageUrl"} shareUrl={"shareUrl"} />
+        <ShareActions imageUrl={imageUrl} shareUrl={share_url} />
       </div>
       <div className="p-4 text-sm text-gray-800">
-        <p className="mb-2">{caption}</p>
-        <div className="text-gray-500 text-xs">{date}</div>
+        <p className="mb-2 break-words">{truncateText(caption, 150)}</p>
+        <div className="text-gray-500 text-xs">{fotmartDate(date)}</div>
       </div>
     </div>
   );

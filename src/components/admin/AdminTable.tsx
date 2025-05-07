@@ -12,7 +12,14 @@ import {
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-
+function formatTimestampToDate(timestamp: number): string {
+  const date = new Date(timestamp * 1000); // nhân lại 1000 vì timestamp đang ở giây
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
 type DataType = {
   account_Id: number;
   caption: string;
@@ -29,7 +36,6 @@ type DataType = {
 export default function AdminTable({ data }: { data: DataType[] }) {
   const [globalFilter, setGlobalFilter] = useState("");
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
-
   const columns = useMemo(
     () => [
       {
@@ -60,8 +66,18 @@ export default function AdminTable({ data }: { data: DataType[] }) {
         ),
       },
       {
-        accessorKey: "date",
+        accessorKey: "date", // timestamp (seconds)
         header: "Date",
+        cell: ({ getValue }) => {
+          const timestamp = Number(getValue()); // ép kiểu thủ công
+          const date = new Date(timestamp * 1000);
+          const formatted = date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+          return formatted;
+        },
       },
       {
         accessorKey: "type",
@@ -84,7 +100,6 @@ export default function AdminTable({ data }: { data: DataType[] }) {
     ],
     [pagination.pageIndex, pagination.pageSize]
   );
-
   const table = useReactTable({
     data,
     columns,
@@ -101,7 +116,6 @@ export default function AdminTable({ data }: { data: DataType[] }) {
     manualPagination: false,
     pageCount: Math.ceil(data.length / pagination.pageSize),
   });
-
   return (
     <div className="p-6">
       <div className="flex justify-end items-center mb-4 flex-wrap gap-3">
@@ -112,7 +126,6 @@ export default function AdminTable({ data }: { data: DataType[] }) {
           className="border px-4 py-2 rounded-lg shadow-sm w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-cyan-500 text-black"
         />
       </div>
-
       <div className="overflow-x-auto border rounded-lg shadow-sm bg-white">
         <table className="min-w-full text-sm text-left text-gray-800">
           <thead className="bg-gray-100">
@@ -148,7 +161,6 @@ export default function AdminTable({ data }: { data: DataType[] }) {
           </tbody>
         </table>
       </div>
-
       <div className="flex justify-between items-center gap-4 mt-4 flex-wrap">
         <div className="flex items-center gap-x-4">
           <span className="text-black">Result per page</span>
@@ -178,7 +190,6 @@ export default function AdminTable({ data }: { data: DataType[] }) {
             of {data.length}
           </div>
         </div>
-
         <div className="gap-8 flex items-center">
           <button
             onClick={() =>
@@ -197,7 +208,6 @@ export default function AdminTable({ data }: { data: DataType[] }) {
             <HiChevronLeft className="text-lg" />
             Previous
           </button>
-
           <button
             onClick={() =>
               setPagination((p) => ({

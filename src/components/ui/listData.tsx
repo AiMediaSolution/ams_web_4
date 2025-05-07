@@ -1,140 +1,95 @@
-// components/dataList.tsx
 "use client";
+
 import Masonry from "react-masonry-css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import TikTokCard from "./tiktokCard";
 import NewsCard from "./newsCard";
-import { image } from "framer-motion/client";
-
+interface SocialItem {
+  type: "facebook" | "tiktok" | "news";
+  id_socialMedia: string;
+  caption: string;
+  date: string;
+  image_url: string;
+  video_display: string;
+  link_share: string;
+}
 const DataList = () => {
-  const videoList = [
-    {
-      videoUrl:
-        "https://www.tiktok.com/player/v1/7296729533951118594?autoplay=0&loop=1",
-      type: "news",
-      caption:
-        "Sóc Trăng Drill rồi đến Cà Mau Drill tui hóng tỉnh miền tây tiếp theo :))) #camaudrill #jombie #sakh",
-      date: "April 16, 2025",
-      shareUrl: "https://www.facebook.com/134402033403353_1403517994244939",
-      imageUrl:
-        "https://scontent-atl3-1.xx.fbcdn.net/v/t51.75761-15/491496733_17897505543187229_4704580110926162922_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=Scr1XJVhMMEQ7kNvwEiOjpc&_nc_oc=AdlY1cUwoZZwb7kg3ztlGQZUOMCusg_jyuNc5ETdj4v6bSRNLstfqiSRq_H3-3vOJoE&_nc_zt=23&_nc_ht=scontent-atl3-1.xx&edm=AKIiGfEEAAAA&_nc_gid=J8nLgIHbD2Vc9ktMJe8Gww&oh=00_AfEwy2f1ehifoy-qoieE-a4WZCMcovp8IQ1kMdfVNx5lFQ&oe=68066A0C",
-    },
-    {
-      videoUrl:
-        "https://www.tiktok.com/player/v1/7296729533951118594?autoplay=0&loop=1",
-      type: "tiktok",
-      caption:
-        "Sóc Trăng Drill rồi đến Cà Mau Drill tui hóng tỉnh miền tây tiếp theo :))) #camaudrill #jombie #sakh",
-      date: "April 16, 2025",
-      shareUrl: "https://www.facebook.com/134402033403353_1403517994244939",
-      imageUrl:
-        "https://scontent-atl3-1.xx.fbcdn.net/v/t51.75761-15/491496733_17897505543187229_4704580110926162922_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=Scr1XJVhMMEQ7kNvwEiOjpc&_nc_oc=AdlY1cUwoZZwb7kg3ztlGQZUOMCusg_jyuNc5ETdj4v6bSRNLstfqiSRq_H3-3vOJoE&_nc_zt=23&_nc_ht=scontent-atl3-1.xx&edm=AKIiGfEEAAAA&_nc_gid=J8nLgIHbD2Vc9ktMJe8Gww&oh=00_AfEwy2f1ehifoy-qoieE-a4WZCMcovp8IQ1kMdfVNx5lFQ&oe=68066A0C",
-    },
-    {
-      videoUrl:
-        "https://www.tiktok.com/player/v1/7296729533951118594?autoplay=0&loop=1",
-      type: "tiktok",
-      shareUrl: "https://www.facebook.com/134402033403353_1403517994244939",
-      caption:
-        "Sóc Trăng Drill rồi đến Cà Mau Drill tui hóng tỉnh miền tây tiếp theo :))) #camaudrill #jombie #sakh",
-      date: "April 16, 2025",
-      imageUrl:
-        "https://scontent-atl3-1.xx.fbcdn.net/v/t51.75761-15/491496733_17897505543187229_4704580110926162922_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=Scr1XJVhMMEQ7kNvwEiOjpc&_nc_oc=AdlY1cUwoZZwb7kg3ztlGQZUOMCusg_jyuNc5ETdj4v6bSRNLstfqiSRq_H3-3vOJoE&_nc_zt=23&_nc_ht=scontent-atl3-1.xx&edm=AKIiGfEEAAAA&_nc_gid=J8nLgIHbD2Vc9ktMJe8Gww&oh=00_AfEwy2f1ehifoy-qoieE-a4WZCMcovp8IQ1kMdfVNx5lFQ&oe=68066A0C",
-    },
-    {
-      videoUrl:
-        "https://www.tiktok.com/player/v1/7493954932547112199?autoplay=0&loop=1",
-      type: "news",
-      shareUrl: "https://www.facebook.com/134402033403353_1403517994244939",
-      caption:
-        "Sóc Trăng Drill rồi đến Cà Mau Drill tui hóng tỉnh miền tây tiếp theo :))) #camaudrill #jombie #sakh",
-      date: "April 16, 2025",
-      imageUrl:
-        "https://scontent-atl3-1.xx.fbcdn.net/v/t51.75761-15/491496733_17897505543187229_4704580110926162922_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=Scr1XJVhMMEQ7kNvwEiOjpc&_nc_oc=AdlY1cUwoZZwb7kg3ztlGQZUOMCusg_jyuNc5ETdj4v6bSRNLstfqiSRq_H3-3vOJoE&_nc_zt=23&_nc_ht=scontent-atl3-1.xx&edm=AKIiGfEEAAAA&_nc_gid=J8nLgIHbD2Vc9ktMJe8Gww&oh=00_AfEwy2f1ehifoy-qoieE-a4WZCMcovp8IQ1kMdfVNx5lFQ&oe=68066A0C",
-    },
-    {
-      videoUrl:
-        "https://www.tiktok.com/player/v1/7493954932547112199?autoplay=0&loop=1",
-      type: "tiktok",
-      shareUrl: "https://www.facebook.com/134402033403353_1403517994244939",
-      caption:
-        "Sóc Trăng Drill rồi đến Cà Mau Drill tui hóng tỉnh miền tây tiếp theo :))) #camaudrill #jombie #sakh",
-      date: "April 16, 2025",
-      imageUrl:
-        "https://scontent-atl3-1.xx.fbcdn.net/v/t51.75761-15/491496733_17897505543187229_4704580110926162922_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=Scr1XJVhMMEQ7kNvwEiOjpc&_nc_oc=AdlY1cUwoZZwb7kg3ztlGQZUOMCusg_jyuNc5ETdj4v6bSRNLstfqiSRq_H3-3vOJoE&_nc_zt=23&_nc_ht=scontent-atl3-1.xx&edm=AKIiGfEEAAAA&_nc_gid=J8nLgIHbD2Vc9ktMJe8Gww&oh=00_AfEwy2f1ehifoy-qoieE-a4WZCMcovp8IQ1kMdfVNx5lFQ&oe=68066A0C",
-    },
-    {
-      videoUrl:
-        "https://www.tiktok.com/player/v1/7493954932547112199?autoplay=0&loop=1",
-      type: "news",
-      shareUrl: "https://www.facebook.com/134402033403353_1403517994244939",
-      caption:
-        "Sóc Trăng Drill rồi đến Cà Mau Drill tui hóng tỉnh miền tây tiếp theo :))) #camaudrill #jombie #sakh",
-      date: "April 16, 2025",
-      imageUrl:
-        "https://scontent-atl3-1.xx.fbcdn.net/v/t51.75761-15/491496733_17897505543187229_4704580110926162922_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=Scr1XJVhMMEQ7kNvwEiOjpc&_nc_oc=AdlY1cUwoZZwb7kg3ztlGQZUOMCusg_jyuNc5ETdj4v6bSRNLstfqiSRq_H3-3vOJoE&_nc_zt=23&_nc_ht=scontent-atl3-1.xx&edm=AKIiGfEEAAAA&_nc_gid=J8nLgIHbD2Vc9ktMJe8Gww&oh=00_AfEwy2f1ehifoy-qoieE-a4WZCMcovp8IQ1kMdfVNx5lFQ&oe=68066A0C",
-    },
-    {
-      videoUrl:
-        "https://www.tiktok.com/player/v1/7493954932547112199?autoplay=0&loop=1",
-      type: "tiktok",
-      shareUrl: "https://www.facebook.com/134402033403353_1403517994244939",
-      caption:
-        "Sóc Trăng Drill rồi đến Cà Mau Drill tui hóng tỉnh miền tây tiếp theo :))) #camaudrill #jombie #sakh",
-      date: "April 16, 2025",
-      imageUrl:
-        "https://scontent-atl3-1.xx.fbcdn.net/v/t51.75761-15/491496733_17897505543187229_4704580110926162922_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=Scr1XJVhMMEQ7kNvwEiOjpc&_nc_oc=AdlY1cUwoZZwb7kg3ztlGQZUOMCusg_jyuNc5ETdj4v6bSRNLstfqiSRq_H3-3vOJoE&_nc_zt=23&_nc_ht=scontent-atl3-1.xx&edm=AKIiGfEEAAAA&_nc_gid=J8nLgIHbD2Vc9ktMJe8Gww&oh=00_AfEwy2f1ehifoy-qoieE-a4WZCMcovp8IQ1kMdfVNx5lFQ&oe=68066A0C",
-    },
-    {
-      videoUrl:
-        "https://www.tiktok.com/player/v1/7493954932547112199?autoplay=0&loop=1",
-      type: "news",
-      shareUrl: "https://www.facebook.com/134402033403353_1403517994244939",
-      caption:
-        "Sóc Trăng Drill rồi đến Cà Mau Drill tui hóng tỉnh miền tây tiếp theo :))) #camaudrill #jombie #sakh",
-      date: "April 16, 2025",
-      imageUrl:
-        "https://scontent-atl3-1.xx.fbcdn.net/v/t51.75761-15/491496733_17897505543187229_4704580110926162922_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=Scr1XJVhMMEQ7kNvwEiOjpc&_nc_oc=AdlY1cUwoZZwb7kg3ztlGQZUOMCusg_jyuNc5ETdj4v6bSRNLstfqiSRq_H3-3vOJoE&_nc_zt=23&_nc_ht=scontent-atl3-1.xx&edm=AKIiGfEEAAAA&_nc_gid=J8nLgIHbD2Vc9ktMJe8Gww&oh=00_AfEwy2f1ehifoy-qoieE-a4WZCMcovp8IQ1kMdfVNx5lFQ&oe=68066A0C",
-    },
-  ];
+  const [data, setData] = useState<SocialItem[]>([]);
+  const [error, setError] = useState<string | undefined>();
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/data`, {
+        method: "GET",
+      });
+
+      if (response.ok) {
+        const json = await response.json();
+        const enhancedData = json.map((item: any) => {
+          if (item.type === "tiktok") {
+            return {
+              ...item,
+              video_display: `https://www.tiktok.com/player/v1/${item.id_socialMedia}?autoplay=0&loop=1`,
+            };
+          }
+          return item;
+        });
+        setData(enhancedData);
+      } else {
+        if (response.status === 401) {
+          console.error(
+            "Access forbidden: You do not have the required permissions."
+          );
+        } else {
+          console.error("Failed to fetch accounts");
+        }
+      }
+    } catch (err) {
+      setError("Failed to load data.");
+      console.error(err);
+    }
+  };
+
   const breakpointColumnsObj = {
-    default: 5,
-    1280: 5,
+    default: 6,
+    1536: 6,
+    1280: 4,
+    1024: 3,
     768: 2,
     480: 1,
   };
+
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://www.tiktok.com/embed.js";
-    script.async = true;
-    document.body.appendChild(script);
+    fetchData();
   }, []);
 
   return (
-    <div className="px-8 md:px-80 my-48">
+    <div className="px-4 sm:px-6 md:px-12 lg:px-28 xl:px-40 2xl:px-60 my-24">
       <Masonry
         breakpointCols={breakpointColumnsObj}
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
       >
-        {videoList.map((data, index) => {
-          if (data.type === "tiktok") {
+        {data.map((item, index) => {
+          if (item.type === "tiktok") {
             return (
               <TikTokCard
                 key={index}
-                videoUrl={data.videoUrl}
-                caption={data.caption}
-                date={data.date}
+                videoUrl={item.video_display}
+                caption={item.caption}
+                date={item.date}
+                share_url={item.link_share}
+                imageUrl={item.image_url}
               />
             );
-          } else if (data.type === "news") {
+          } else if (item.type === "facebook" || item.type === "news") {
             return (
               <NewsCard
                 key={index}
-                imageUrl={data.imageUrl}
-                caption={data.caption}
-                date={data.date}
-                shareUrl={data.shareUrl}
+                imageUrl={item.image_url}
+                caption={item.caption}
+                date={item.date}
+                shareUrl={item.link_share}
               />
             );
           } else {

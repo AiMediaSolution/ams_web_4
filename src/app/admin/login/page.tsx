@@ -53,12 +53,11 @@ export default function LoginPage() {
 
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:8080/auth/login", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      console.log("Response status:", res);
       if (res.ok) {
         const data = await res.json();
         localStorage.setItem("accessToken", data.accessToken);

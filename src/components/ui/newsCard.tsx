@@ -19,7 +19,7 @@ const NewsCard = ({
   shareUrl,
 }: FacebookNewsCardProps) => {
   return (
-    <div className="relative max-w-[228px] mx-auto">
+    <div className="relative w-full max-w-full sm:max-w-[300px] md:max-w-[360px] lg:max-w-[228px] mx-auto">
       <div className="group/card relative rounded-2xl shadow-md overflow-hidden w-full">
         <img
           src={imageUrl}

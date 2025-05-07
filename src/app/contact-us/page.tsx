@@ -45,10 +45,9 @@ export default function ContactUsPage() {
       toast.error("Please fix the errors before submitting.");
       return;
     }
-
     setIsSending(true);
     try {
-      const res = await fetch("http://localhost:5000/api/contact", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/mail`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

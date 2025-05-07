@@ -6,23 +6,22 @@ interface CircularTextProps {
 }
 
 export const CircularText = ({ text }: CircularTextProps) => {
-  const textRef = useRef<HTMLDivElement>(null);
+  const textContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (textRef.current) {
+    if (textContainerRef.current) {
       const chars = text.split("");
-      textRef.current.innerHTML = chars
+      const degreeStep = 360 / chars.length;
+
+      textContainerRef.current.innerHTML = chars
         .map(
           (char, i) =>
             `<span style="
               position: absolute;
               left: 50%;
-              top: 50%;
-              transform-origin: 0 120px;
-              transform: rotate(${
-                i * (360 / chars.length)
-              }deg) translateX(-50%);
-              white-space: pre;
+              transform: rotate(${i * degreeStep}deg);
+              transform-origin: 0 100px;
+              font-size: 1.2em;
             ">${char}</span>`
         )
         .join("");
@@ -30,19 +29,25 @@ export const CircularText = ({ text }: CircularTextProps) => {
   }, [text]);
 
   return (
-    <div className="relative w-[300px] h-[300px]">
-      <div className="absolute top-1/2 left-1/2 w-[160px] h-[160px] rounded-full overflow-hidden transform -translate-x-1/2 -translate-y-1/2 z-10">
-        <img
-          src="/images/footer-logo1-removebg-preview.png"
-          alt="Logo"
-          className="object-cover w-full h-full"
-        />
+    <div className="flex items-center justify-center bg-[#f7f7f7] w-[200px]">
+      <div className="relative w-[200px] h-[200px] rounded-full flex items-center justify-center">
+        <div
+          className="absolute w-[180px] h-[180px] rounded-full bg-center
+          bg-cover"
+        >
+          <img
+            src="/images/circularText_logo.png"
+            alt="Logo"
+            className="object-cover w-full h-full"
+            width={60}
+            height={60}
+          />
+        </div>
+        <div
+          className="absolute w-full h-full font-mono text-black text-[17px] animate-[spin_8s_linear_infinite]"
+          ref={textContainerRef}
+        ></div>
       </div>
-
-      <div
-        ref={textRef}
-        className="absolute top-1/2 left-1/2 w-full h-full text-black text-[17px] font-mono animate-spin-slow transform -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-      ></div>
     </div>
   );
 };

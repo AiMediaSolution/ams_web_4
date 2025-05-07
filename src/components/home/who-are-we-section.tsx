@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { CircularText1 } from "@/components/ui/t";
+import { CircularText } from "@/components/ui/circularText";
 
 const WhoAreWeSection = () => {
   return (
@@ -31,7 +31,7 @@ const WhoAreWeSection = () => {
         </div>
         <div className="grid grid-rows-[200px_1fr] h-auto md:h-[550px] max-sm:h-[500px]">
           <div className="ml-auto flex items-start justify-center md:justify-center max-sm:mx-auto">
-            <CircularText1 text="AI MEDIA SOLUTION • AMS •" />
+            <CircularText text="AI MEDIA SOLUTION • AMS •" />
           </div>
           <div className="relative h-[300px] md:h-[400px] w-full max-sm:flex items-center justify-center max-sm:mt-4 max-sm:px-2">
             <Image

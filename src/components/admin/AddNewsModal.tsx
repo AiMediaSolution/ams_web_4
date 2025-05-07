@@ -46,6 +46,10 @@ export default function AddNewsModal({
       day: "numeric",
     });
   };
+  const dateNow = () => {
+    const now = Math.floor(Date.now() / 1000).toString();
+    return now;
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -64,14 +68,13 @@ export default function AddNewsModal({
         }));
         return;
       }
-      console.log("File selected:", file);
-
       setImageFile(file);
       setErrors((prev) => ({ ...prev, image: "" }));
     }
   };
 
   const handleSubmit = () => {
+    form.date = dateNow();
     const { share_url, caption, date } = form;
     const newErrors = { share_url: "", caption: "", date: "", image: "" };
     if (!share_url) newErrors.share_url = "Share URL is required.";
@@ -95,8 +98,20 @@ export default function AddNewsModal({
         if (match) videoId = match[1];
       } else if (url.hostname.includes("facebook.com")) {
         type = "facebook";
-        const match = url.pathname.match(/\/(\d+)_(\d+)/);
-        if (match) videoId = match[2];
+        let match =
+          url.pathname.match(/\/share\/p\/([^/]+)/) ||
+          url.pathname.match(/\/share\/v\/([^/]+)/) ||
+          url.pathname.match(/\/(\d+)_(\d+)/);
+
+        if (match) {
+          videoId = match[1] || match[2];
+        } else {
+          setErrors((prev) => ({
+            ...prev,
+            share_url: "Facebook URL format not recognized.",
+          }));
+          return;
+        }
       } else {
         alert("Only TikTok or Facebook URLs are supported.");
         return;
@@ -108,17 +123,12 @@ export default function AddNewsModal({
       }));
       return;
     }
-
     const formData = new FormData();
     formData.append("type", type);
     formData.append("id_socialMedia", videoId);
-    formData.append(
-      "date_update",
-      Math.floor(new Date(form.date).getTime() / 1000).toString()
-    );
+    formData.append("date_update", dateNow());
     Object.entries(form).forEach(([key, val]) => formData.append(key, val));
     if (imageFile) formData.append("image", imageFile);
-
     onSubmit(formData);
   };
 
@@ -200,7 +210,7 @@ export default function AddNewsModal({
                 <p className="text-red-500 text-sm">{errors.caption}</p>
               )}
 
-              <div className="flex flex-col gap-2">
+              {/* <div className="flex flex-col gap-2">
                 <label className="text-sm font-medium text-gray-700">
                   Select Date
                 </label>
@@ -224,7 +234,7 @@ export default function AddNewsModal({
                   }}
                   className="border px-4 py-2 rounded text-sm w-full focus:ring-cyan-400"
                 />
-              </div>
+              </div> */}
             </div>
             <div className="flex justify-end gap-3 pt-4">
               <button

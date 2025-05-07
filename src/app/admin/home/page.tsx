@@ -6,8 +6,6 @@ import AdminTable from "@/components/admin/AdminTable";
 import AddNewsModal from "@/components/admin/AddNewsModal";
 import { FiPlusCircle } from "react-icons/fi";
 
-const apiUrl = "http://localhost:8080";
-
 const AdminHome = () => {
   const [error, setError] = useState("");
   const [data, setData] = useState([]);
@@ -18,7 +16,10 @@ const AdminHome = () => {
   }, []);
 
   const fetchData = async () => {
-    const response = await fetchWithAuth(`${apiUrl}/admin`, { method: "GET" });
+    const response = await fetchWithAuth(
+      `${process.env.NEXT_PUBLIC_API_URL}/admin`,
+      { method: "GET" }
+    );
     if (response.ok) {
       const data = await response.json();
       setData(data);
@@ -32,14 +33,14 @@ const AdminHome = () => {
   };
 
   const handleSubmitNews = async (formData: FormData) => {
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
-    }
     try {
-      const response = await fetchWithAuth(`${apiUrl}/admin/upload`, {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetchWithAuth(
+        `${process.env.NEXT_PUBLIC_API_URL}/admin/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
       if (response.ok) {
         setShowModal(false);
         fetchData(); // refresh table

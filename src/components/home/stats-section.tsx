@@ -1,4 +1,3 @@
-// components/PricingCards.tsx
 "use client";
 
 import { useEffect, useState } from "react";
