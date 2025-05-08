@@ -15,6 +15,8 @@ export default function AdminLayout({
   const [loading, setLoading] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
   useEffect(() => {
+    console.log("AdminLayout useEffect");
+    console.log("Checking admin access...");
     const protectAdmin = async () => {
       try {
         await checkAdmin();
