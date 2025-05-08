@@ -61,6 +61,7 @@ export default function ContactUsPage() {
         toast.error(data.error || "Something went wrong.");
       }
     } catch (err) {
+      console.error(err);
       toast.error("Failed to connect to server.");
     } finally {
       setIsSending(false);

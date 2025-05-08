@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { FaUser, FaLock, FaUserCircle } from "react-icons/fa";
-import { refreshToken } from "@/lib/auth";
 import { checkAdmin } from "@/lib/checkAdmin";
 
 export default function LoginPage() {
@@ -14,7 +13,6 @@ export default function LoginPage() {
   const [form, setForm] = useState({ username: "", password: "" });
   const [errors, setErrors] = useState({ username: "", password: "" });
   const [loading, setLoading] = useState(false);
-  const pathname = usePathname();
 
   useEffect(() => {
     const redirectIfLoggedIn = async () => {
@@ -27,7 +25,7 @@ export default function LoginPage() {
     };
 
     redirectIfLoggedIn();
-  }, []);
+  }, [router]);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -68,6 +66,7 @@ export default function LoginPage() {
         toast.error(errData.message || "Login failed!");
       }
     } catch (err) {
+      console.error(err);
       toast.error("Something went wrong!");
     } finally {
       setLoading(false);

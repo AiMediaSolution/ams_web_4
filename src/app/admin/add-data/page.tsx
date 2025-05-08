@@ -38,6 +38,7 @@ const AdminHome = () => {
         }
       }
     } catch (err) {
+      console.error(err);
       setError("Unable to connect to the server. Please try again later.");
     }
     setLoading(false);
@@ -59,6 +60,7 @@ const AdminHome = () => {
         alert("Failed to upload news");
       }
     } catch (error) {
+      console.error("Error uploading news:", error);
       alert("An error occurred.");
     }
   };

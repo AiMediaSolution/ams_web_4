@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { FiUploadCloud } from "react-icons/fi";
-
+import Image from "next/image";
 export default function AddNewsModal({
   isOpen,
   onClose,
@@ -38,14 +38,6 @@ export default function AddNewsModal({
     }
   }, [imageFile]);
 
-  const formatsDate = () => {
-    const now = new Date();
-    return now.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
   const dateNow = () => {
     const now = Math.floor(Date.now() / 1000).toString();
     return now;
@@ -98,7 +90,7 @@ export default function AddNewsModal({
         if (match) videoId = match[1];
       } else if (url.hostname.includes("facebook.com")) {
         type = "facebook";
-        let match =
+        const match =
           url.pathname.match(/\/share\/p\/([^/]+)/) ||
           url.pathname.match(/\/share\/v\/([^/]+)/) ||
           url.pathname.match(/\/(\d+)_(\d+)/);
@@ -159,10 +151,14 @@ export default function AddNewsModal({
             }}
           >
             {imagePreview ? (
-              <img
+              <Image
                 src={imagePreview}
                 alt="Preview"
-                className="rounded-lg object-contain h-[200px] w-full mb-4"
+                width={800}
+                height={200}
+                className="rounded-lg object-contain mb-4 w-full h-[200px]"
+                style={{ objectFit: "contain" }}
+                unoptimized
               />
             ) : (
               <>

@@ -12,14 +12,8 @@ import {
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-function formatTimestampToDate(timestamp: number): string {
-  const date = new Date(timestamp * 1000); // nhân lại 1000 vì timestamp đang ở giây
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
+import Image from "next/image";
+
 type DataType = {
   account_Id: number;
   caption: string;
@@ -40,20 +34,27 @@ export default function AdminTable({ data }: { data: DataType[] }) {
     () => [
       {
         header: "#",
-        cell: ({ row }: any) =>
+        cell: ({
+          row,
+        }: import("@tanstack/react-table").CellContext<DataType, unknown>) =>
           pagination.pageIndex * pagination.pageSize + row.index + 1,
       },
       {
         accessorKey: "image_url",
         header: "Image",
-        cell: ({ getValue }: any) => {
+        cell: ({
+          getValue,
+        }: import("@tanstack/react-table").CellContext<DataType, string>) => {
           const baseUrl = process.env.NEXT_PUBLIC_API_URL || "";
           const imageUrl = `${baseUrl}${getValue()}`;
           return (
-            <img
+            <Image
               src={imageUrl}
               alt="Preview"
-              className="w-28 h-16 object-cover rounded"
+              width={112}
+              height={64}
+              className="object-cover rounded"
+              unoptimized
             />
           );
         },
@@ -61,7 +62,9 @@ export default function AdminTable({ data }: { data: DataType[] }) {
       {
         accessorKey: "caption",
         header: "Caption",
-        cell: ({ getValue }: any) => (
+        cell: ({
+          getValue,
+        }: import("@tanstack/react-table").CellContext<DataType, string>) => (
           <div className="max-w-[250px] truncate">{getValue()}</div>
         ),
       },
@@ -86,7 +89,9 @@ export default function AdminTable({ data }: { data: DataType[] }) {
       {
         accessorKey: "share_url",
         header: "Link",
-        cell: ({ getValue }: any) => (
+        cell: ({
+          getValue,
+        }: import("@tanstack/react-table").CellContext<DataType, string>) => (
           <a
             href={getValue()}
             target="_blank"

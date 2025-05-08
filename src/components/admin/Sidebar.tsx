@@ -1,10 +1,7 @@
 "use client";
 import {
-  MdDashboard,
-  MdCalendarToday,
   MdPerson,
   MdInsertChart,
-  MdViewList,
   MdTableChart,
   MdPages,
   MdLock,
@@ -87,7 +84,7 @@ export default function Sidebar() {
   useEffect(() => {
     const saved = localStorage.getItem("sidebarCollapsed");
     if (saved === "true") toggle();
-  }, []);
+  }, [toggle]);
 
   useEffect(() => {
     localStorage.setItem("sidebarCollapsed", collapsed.toString());
@@ -172,7 +169,6 @@ export default function Sidebar() {
                           </span>
                         )}
                       </motion.button>
-
                       <AnimatePresence initial={false}>
                         {!collapsed &&
                           item.children &&

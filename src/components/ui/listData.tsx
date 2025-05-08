@@ -25,7 +25,7 @@ const DataList = () => {
 
       if (response.ok) {
         const json = await response.json();
-        const enhancedData = json.map((item: any) => {
+        const enhancedData = (json as SocialItem[]).map((item) => {
           if (item.type === "tiktok") {
             return {
               ...item,
@@ -62,7 +62,13 @@ const DataList = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
+  if (error) {
+    return (
+      <div className="text-red-500 text-center font-semibold mt-10">
+        {error}
+      </div>
+    );
+  }
   return (
     <div className="px-4 sm:px-6 md:px-12 lg:px-28 xl:px-40 2xl:px-60 my-24">
       <Masonry

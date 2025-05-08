@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 
 interface CircularTextProps {
@@ -35,12 +36,12 @@ export const CircularText = ({ text }: CircularTextProps) => {
           className="absolute w-[180px] h-[180px] rounded-full bg-center
           bg-cover"
         >
-          <img
+          <Image
             src="/images/circularText_logo.png"
             alt="Logo"
-            className="object-cover w-full h-full"
             width={60}
             height={60}
+            className="object-cover w-full h-full"
           />
         </div>
         <div

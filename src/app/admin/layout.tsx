@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Sidebar from "@/components/admin/Sidebar";
 import Header from "@/components/admin/Header";
-import { fetchWithAuth } from "@/lib/auth";
 import { SidebarProvider } from "@/components/admin/SidebarContext";
 import { checkAdmin } from "@/lib/checkAdmin";
 export default function AdminLayout({
@@ -13,7 +12,6 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const [darkMode, setDarkMode] = useState(true);
   const [loading, setLoading] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
   useEffect(() => {
@@ -29,7 +27,7 @@ export default function AdminLayout({
     };
 
     protectAdmin();
-  }, []);
+  }, [router]);
 
   if (loading) {
     return <div className="p-10 text-gray-500">Checking admin access...</div>;

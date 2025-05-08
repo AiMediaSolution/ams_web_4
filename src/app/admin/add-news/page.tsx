@@ -3,33 +3,47 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+type FormState = {
+  type: string;
+  content: string;
+  video_url: string;
+  caption: string;
+  date: string;
+  share_url: string;
+  image: File | null;
+};
+
 const AddNewsPage = () => {
   const router = useRouter();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormState>({
     type: "",
     content: "",
     video_url: "",
     caption: "",
     date: "",
     share_url: "",
-    image: null as File | null,
+    image: null,
   });
 
-  const handleChange = (e: any) => {
-    const { name, value, files } = e.target;
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value, files } = e.target as HTMLInputElement;
     setFormData((prev) => ({
       ...prev,
       [name]: files ? files[0] : value,
     }));
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const form = new FormData();
-    Object.entries(formData).forEach(([key, value]) =>
-      form.append(key, value as any)
-    );
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value !== null) {
+        form.append(key, value instanceof File ? value : String(value));
+      }
+    });
 
     const res = await fetch("http://localhost:8080/admin", {
       method: "POST",

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { FaVideo, FaPlayCircle, FaFileAlt, FaClock } from "react-icons/fa";
-import { motion, useInView } from "framer-motion";
+import { useInView } from "framer-motion";
 import { useRef } from "react";
 import "@/styles/pricing-cards.css";
 
@@ -36,8 +36,6 @@ const AnimatedCounter = ({
 
   useEffect(() => {
     if (!isInView) return;
-
-    let start = 0;
     const duration = 1500;
     const steps = 30;
     const increment = value / steps;

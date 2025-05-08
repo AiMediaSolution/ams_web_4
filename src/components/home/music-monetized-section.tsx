@@ -43,10 +43,10 @@ const MusicMonetizedSection = () => {
               A team of YouTube Certified Content ID specialists. Our UGC
               experts bring extensive industry knowledge and experience
               monetizing small and large music catalogs on YouTube. By
-              partnering with Identifyy, you'll gain valuable insight into the
-              usage of your music on YouTube and gain control over which
+              partnering with Identifyy, you&rsquo;ll gain valuable insight into
+              the usage of your music on YouTube and gain control over which
               third-party videos are allowed to remain up to be monetized and
-              which videos you'd like us to take down.
+              which videos you&rsquo;d like us to take down.
             </p>
             <div className="flex flex-wrap gap-2 mt-6">
               {[

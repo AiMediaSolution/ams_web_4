@@ -48,6 +48,7 @@ const AdminHome = () => {
         alert("Failed to upload news");
       }
     } catch (error) {
+      console.error("Error uploading news:", error);
       alert("An error occurred.");
     }
   };
@@ -65,7 +66,13 @@ const AdminHome = () => {
         </button>
       </div>
 
-      <AdminTable data={data} />
+      <div className="p-6">
+        {error ? (
+          <p className="text-red-500 font-semibold text-center">{error}</p>
+        ) : (
+          <AdminTable data={data} />
+        )}
+      </div>
 
       <AddNewsModal
         isOpen={showModal}
