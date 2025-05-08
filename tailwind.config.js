@@ -49,6 +49,10 @@ module.exports = {
           4: "hsl(var(--chart-4))",
           5: "hsl(var(--chart-5))",
         },
+        brand: {
+          50: "#eef2ff", // nhẹ làm nền
+          500: "#4f46e5", // tím chủ đạo (tailwind indigo-600)
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

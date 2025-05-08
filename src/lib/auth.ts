@@ -1,7 +1,5 @@
 "use client";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
 export async function refreshToken(): Promise<string | null> {
   const refreshToken = localStorage.getItem("refreshToken");
   if (!refreshToken) {
@@ -10,11 +8,14 @@ export async function refreshToken(): Promise<string | null> {
   }
 
   try {
-    const res = await fetch(`${API_URL}/auth/refresh-token`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ refreshToken }),
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ refreshToken }),
+      }
+    );
 
     if (!res.ok) throw new Error("Refresh token failed");
 
@@ -30,10 +31,10 @@ export async function refreshToken(): Promise<string | null> {
 
 function redirectToLogin() {
   if (typeof window !== "undefined") {
-    if (window.location.pathname !== "/admin/login") {
+    if (window.location.pathname !== "/login") {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
-      window.location.href = "/admin/login";
+      window.location.href = "/login";
     }
   }
 }
@@ -43,7 +44,6 @@ export async function fetchWithAuth(
   options: RequestInit = {}
 ): Promise<Response> {
   let token = localStorage.getItem("accessToken");
-
   if (!token) {
     redirectToLogin();
     return new Response(null, { status: 401 });
