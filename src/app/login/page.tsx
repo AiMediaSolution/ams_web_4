@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { FaUser, FaLock, FaUserCircle } from "react-icons/fa";
 import { refreshToken } from "@/lib/auth";
+import { checkAdmin } from "@/lib/checkAdmin";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -16,19 +17,17 @@ export default function LoginPage() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const token = localStorage.getItem("accessToken");
-
-      if (!token) {
-        const refreshed = await refreshToken();
-        if (refreshed && pathname !== "/admin/home") {
-          router.push("/admin/home");
-        }
+    const redirectIfLoggedIn = async () => {
+      try {
+        await checkAdmin();
+        router.replace("/admin"); // hoặc /admin/home nếu bạn muốn
+      } catch {
+        // tiếp tục ở lại trang login
       }
     };
 
-    checkAuth();
-  }, [pathname, router]);
+    redirectIfLoggedIn();
+  }, []);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -79,7 +78,7 @@ export default function LoginPage() {
     <>
       <ToastContainer position="top-right" />
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#dbeafe] via-white to-[#f0f9ff] px-4">
-        <div className="backdrop-blur-lg bg-white/80 border border-blue-200 rounded-2xl shadow-xl w-full max-w-md p-8 sm:p-10">
+        <div className="backdrop-blur-lg bg-white/80 border border-blue-200 shadow-xl w-full max-w-md p-8 sm:p-10">
           <div className="flex justify-center mb-6">
             <FaUserCircle className="text-blue-400 text-6xl drop-shadow" />
           </div>
