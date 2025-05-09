@@ -1,4 +1,4 @@
-// components/TiktokCard.tsx
+// components/TikTokCard.tsx
 "use client";
 import React from "react";
 import ShareActions from "./shareActions";
@@ -21,7 +21,8 @@ const TikTokCard = ({
   const truncateText = (text: string, maxLength: number) => {
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
   };
-  const fotmartDate = (timestamp: string) => {
+
+  const formatDate = (timestamp: string) => {
     const num = parseInt(timestamp);
     const date = new Date(num * 1000);
     return date.toLocaleDateString("en-US", {
@@ -30,12 +31,14 @@ const TikTokCard = ({
       day: "numeric",
     });
   };
+
   return (
     <div
-      className="relative flex flex-col bg-white shadow-lg rounded-2xl overflow-hidden w-full
-max-w-full sm:max-w-[320px] md:max-w-[360px] lg:max-w-[230px] mx-auto"
+      className="relative flex flex-col bg-white shadow-lg rounded-2xl overflow-hidden 
+      w-full max-w-full sm:max-w-[320px] md:max-w-[360px] lg:max-w-[230px] mx-auto 
+      max-h-[640px]"
     >
-      <div className="relative w-full pt-[177.78%]">
+      <div className="relative aspect-[9/16] w-full">
         <iframe
           className="absolute top-0 left-0 w-full h-full border-0"
           src={videoUrl}
@@ -46,8 +49,10 @@ max-w-full sm:max-w-[320px] md:max-w-[360px] lg:max-w-[230px] mx-auto"
         <ShareActions imageUrl={imageUrl} shareUrl={share_url} />
       </div>
       <div className="p-4 text-xs text-gray-800">
-        <p className="mb-2 break-words">{truncateText(caption, 100)}</p>
-        <div className="text-gray-500 text-xs">{fotmartDate(date)}</div>
+        <p className="mb-2 break-words line-clamp-3">
+          {truncateText(caption, 100)}
+        </p>
+        <div className="text-gray-500 text-xs">{formatDate(date)}</div>
       </div>
     </div>
   );
