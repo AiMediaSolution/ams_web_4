@@ -45,8 +45,9 @@ export default function AdminTable({ data }: { data: DataType[] }) {
         cell: ({
           getValue,
         }: import("@tanstack/react-table").CellContext<DataType, string>) => {
-          const baseUrl = process.env.NEXT_PUBLIC_API_URL || "";
+          const baseUrl = process.env.NEXT_PUBLIC_IMG || "";
           const imageUrl = `${baseUrl}${getValue()}`;
+          console.log("Image URL:", imageUrl);
           return (
             <Image
               src={imageUrl}

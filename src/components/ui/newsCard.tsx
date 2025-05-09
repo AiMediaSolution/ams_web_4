@@ -14,11 +14,13 @@ interface FacebookNewsCardProps {
 }
 
 const NewsCard = ({ imageUrl, caption, shareUrl }: FacebookNewsCardProps) => {
+  const baseUrlImage = process.env.NEXT_PUBLIC_IMG || "";
+  const imageUrlWithBase = `${baseUrlImage}${imageUrl}`;
   return (
     <div className="relative w-full max-w-full sm:max-w-[300px] md:max-w-[360px] lg:max-w-[228px] mx-auto">
       <div className="group/card relative rounded-2xl shadow-md overflow-hidden w-full">
         <Image
-          src={imageUrl}
+          src={imageUrlWithBase}
           alt="FaceBook News"
           width={800}
           height={230}
