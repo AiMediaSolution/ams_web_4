@@ -63,7 +63,7 @@ const AnimatedCounter = ({
 
 export const StatsSection = () => {
   return (
-    <main className="w-full max-w-7xl mx-auto px-4 py-12 text-center">
+    <main className="w-full max-w-7xl mx-auto px-4 py-12 text-center ">
       <div className="bg-gradient-to-b from-[#052925] to-black rounded-3xl border border-[#3B7A74] shadow-[0_0_30px_#3B7A74] p-8 md:p-12">
         <h2 className="text-white text-2xl md:text-4xl font-bold mb-4">
           WHAT ARE WE CAPABLE OF DOING?

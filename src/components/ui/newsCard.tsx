@@ -14,6 +14,9 @@ interface FacebookNewsCardProps {
 }
 
 const NewsCard = ({ imageUrl, caption, shareUrl }: FacebookNewsCardProps) => {
+  const truncateText = (text: string, maxLength: number) => {
+    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+  };
   const baseUrlImage = process.env.NEXT_PUBLIC_IMG || "";
   const imageUrlWithBase = `${baseUrlImage}${imageUrl}`;
   return (
@@ -29,7 +32,7 @@ const NewsCard = ({ imageUrl, caption, shareUrl }: FacebookNewsCardProps) => {
         />
         <div className="absolute inset-0 bg-[#354051] text-white opacity-0 group-hover/card:opacity-70 transition-opacity duration-300 flex justify-center items-center pointer-events-none">
           <p className="text-sm font-medium text-center px-2 pointer-events-auto">
-            {caption}
+            {truncateText(caption, 150)}
           </p>
         </div>
       </div>
