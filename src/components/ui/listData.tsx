@@ -75,7 +75,7 @@ const DataList = () => {
       </h1>
       <Masonry
         breakpointCols={breakpointColumnsObj}
-        className="my-masonry-grid"
+        className="my-masonry-grid px-2"
         columnClassName="my-masonry-grid_column"
       >
         {data.map((item, index) => {
