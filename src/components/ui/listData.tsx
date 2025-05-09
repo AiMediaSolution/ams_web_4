@@ -49,7 +49,8 @@ const DataList = () => {
       console.error(err);
     }
   };
-
+  console.log("test:"); // Log the error to check its value
+  console.log("Data:"); // Log the data to check its structure
   const breakpointColumnsObj = {
     default: 6,
     1536: 5,
