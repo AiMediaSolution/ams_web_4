@@ -71,11 +71,11 @@ const DataList = () => {
   return (
     <section className="px-4 sm:px-6 md:px-12 lg:px-28 xl:px-40 2xl:px-40 py-24 ">
       <h1 className="text-3xl md:text-4xl font-bold text-center mb-12">
-        Follow us at @vieentmusic12331231
+        Follow us at @vieentmusic
       </h1>
       <Masonry
         breakpointCols={breakpointColumnsObj}
-        className="my-masonry-grid px-2"
+        className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
       >
         {data.map((item, index) => {
