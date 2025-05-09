@@ -82,9 +82,12 @@ export default function Sidebar() {
   const pathname = usePathname();
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
   useEffect(() => {
-    const saved = localStorage.getItem("sidebarCollapsed");
-    if (saved === "true") toggle();
-  }, [toggle]);
+    const saved = localStorage.getItem("sidebarCollapsed") === "true";
+    if (saved) {
+      toggle();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("sidebarCollapsed", collapsed.toString());
