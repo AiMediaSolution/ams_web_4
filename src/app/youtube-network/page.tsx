@@ -8,7 +8,6 @@ import { FiCheckSquare } from "react-icons/fi";
 import Layout from "@/components/layout";
 import Image from "next/image";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-
 export default function YouTubeNetworkPage() {
   const rightsData = [
     "Provides Full-Service Content ID (CID) to Broadcasters, Studios, Networks and Original Content Rights Holders",

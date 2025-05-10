@@ -31,7 +31,7 @@ const NewsCard = ({ imageUrl, caption, shareUrl }: FacebookNewsCardProps) => {
           unoptimized
         />
         <div className="absolute inset-0 bg-[#354051] text-white opacity-0 group-hover/card:opacity-70 transition-opacity duration-300 flex justify-center items-center pointer-events-none">
-          <p className="text-sm font-medium text-center px-2 pointer-events-auto">
+          <p className="text-xs font-medium text-center px-2 pointer-events-auto">
             {truncateText(caption, 150)}
           </p>
         </div>

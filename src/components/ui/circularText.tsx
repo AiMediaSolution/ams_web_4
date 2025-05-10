@@ -41,6 +41,7 @@ export const CircularText = ({ text }: CircularTextProps) => {
             alt="Logo"
             width={60}
             height={60}
+            unoptimized
             className="object-cover w-full h-full"
           />
         </div>
