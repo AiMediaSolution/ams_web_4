@@ -2,6 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
 import {
   FiMenu,
   FiUser,
@@ -10,7 +12,6 @@ import {
   FiHelpCircle,
 } from "react-icons/fi";
 import { MdExpandMore } from "react-icons/md";
-import Image from "next/image";
 import { useSidebar } from "@/components/admin/SidebarContext";
 
 export default function Header() {
@@ -19,7 +20,6 @@ export default function Header() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
-  // Đóng dropdown nếu click ra ngoài
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -29,6 +29,7 @@ export default function Header() {
         setOpenDropdown(false);
       }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -50,7 +51,6 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Avatar + Dropdown */}
       <div className="relative" ref={dropdownRef}>
         <button
           onClick={() => setOpenDropdown((prev) => !prev)}
@@ -62,38 +62,57 @@ export default function Header() {
               alt="Avatar"
               width={32}
               height={32}
+              unoptimized
               className="w-full h-full object-cover"
             />
           </div>
           <span className="text-sm font-medium">Admin AMS</span>
           <MdExpandMore
-            className={`transform transition-transform text-xl ${
+            className={`text-xl transition-transform ${
               openDropdown ? "rotate-180" : ""
             }`}
           />
         </button>
 
         {openDropdown && (
-          <div className="absolute z-40 right-0 mt-2 rounded-xl border border-gray-200 bg-white  shadow-theme-lg  dark:bg-gray-dark  flex w-[260px] flex-col  p-3 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark">
+          <div className="absolute right-0 mt-2 z-40 w-[260px] p-3 flex flex-col rounded-xl border border-gray-200 bg-white shadow-theme-lg dark:bg-gray-dark dark:border-gray-800">
             <div className="mb-3">
               <p className="font-semibold text-sm">Admin AMS</p>
               <p className="text-sm text-gray-500">admin@email.com</p>
             </div>
+
             <ul className="space-y-2 text-sm text-gray-700 font-medium">
-              <li className="flex items-center gap-2 hover:bg-gray-100 hover:text-gray-900 p-2 rounded-md cursor-pointer font-semibold">
-                <FiUser className="text-gray-500 text-xl" /> Edit profile
+              <li>
+                <Link
+                  href="/admin/admin-profile"
+                  className="flex items-center gap-4 p-2 rounded-md font-semibold hover:bg-gray-100 hover:text-gray-900"
+                >
+                  <FiUser className="text-gray-500 text-xl" /> Profile
+                </Link>
               </li>
-              <li className="flex items-center gap-2 hover:bg-gray-100 p-2 hover:text-gray-900 rounded-md cursor-pointer font-semibold">
-                <FiSettings className="text-gray-500 text-xl" /> Account
-                settings
+              <li>
+                <Link
+                  href="/account/settings"
+                  className="flex items-center gap-4 p-2 rounded-md font-semibold hover:bg-gray-100 hover:text-gray-900"
+                >
+                  <FiSettings className="text-gray-500 text-xl" /> Account
+                  settings
+                </Link>
               </li>
-              <li className="flex items-center gap-2 hover:bg-gray-100 p-2 hover:text-gray-900 rounded-md cursor-pointer font-semibold">
-                <FiHelpCircle className="text-gray-500 text-xl" /> Support
+              <li>
+                <Link
+                  href="/support"
+                  className="flex items-center gap-4 p-2 rounded-md font-semibold hover:bg-gray-100 hover:text-gray-900"
+                >
+                  <FiHelpCircle className="text-gray-500 text-xl" /> Support
+                </Link>
               </li>
+
               <hr className="my-2" />
+
               <li
                 onClick={handleLogout}
-                className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded-md hover:text-gray-900 cursor-pointer text-red-500 font-semibold"
+                className="flex items-center gap-2 p-2 rounded-md font-semibold text-red-500 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
               >
                 <FiLogOut className="text-xl" /> Sign out
               </li>

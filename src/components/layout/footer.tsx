@@ -125,8 +125,6 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-
-          {/* Column 3: Legal */}
           <div className="space-y-3">
             <h3 className="font-semibold text-white mb-3">Legal</h3>
             <ul className="space-y-2">
@@ -156,7 +154,6 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-
         <div className="border-t border-gray-800 pt-4 mt-6">
           <p className="text-sm  text-center">
             © AI Media Solution, Inc. All Rights Reserved.
