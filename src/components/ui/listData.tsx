@@ -90,7 +90,11 @@ const DataList = () => {
                 imageUrl={item.image_url}
               />
             );
-          } else if (item.type === "facebook" || item.type === "news") {
+          } else if (
+            item.type === "facebook" ||
+            item.type === "news" ||
+            item.type === "youtube"
+          ) {
             return (
               <NewsCard
                 key={index}

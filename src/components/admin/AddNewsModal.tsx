@@ -83,17 +83,22 @@ export default function AddNewsModal({
     let videoId = "";
     try {
       const url = new URL(share_url);
+      const hostname = url.hostname;
+      const pathname = url.pathname;
+      const searchParams = url.searchParams;
 
-      if (url.hostname.includes("tiktok.com")) {
+      if (hostname.includes("tiktok.com")) {
         type = "tiktok";
-        const match = url.pathname.match(/\/video\/(\d+)/);
-        if (match) videoId = match[1];
-      } else if (url.hostname.includes("facebook.com")) {
+        const match = pathname.match(/\/video\/(\d+)/);
+        if (match) {
+          videoId = match[1];
+        }
+      } else if (hostname.includes("facebook.com")) {
         type = "facebook";
         const match =
-          url.pathname.match(/\/share\/p\/([^/]+)/) ||
-          url.pathname.match(/\/share\/v\/([^/]+)/) ||
-          url.pathname.match(/\/(\d+)_(\d+)/);
+          pathname.match(/\/share\/p\/([^/]+)/) ||
+          pathname.match(/\/share\/v\/([^/]+)/) ||
+          pathname.match(/\/(\d+)_(\d+)/);
 
         if (match) {
           videoId = match[1] || match[2];
@@ -104,8 +109,37 @@ export default function AddNewsModal({
           }));
           return;
         }
+      } else if (
+        hostname.includes("youtube.com") ||
+        hostname.includes("youtu.be")
+      ) {
+        type = "youtube";
+        if (hostname.includes("youtu.be")) {
+          const match = pathname.match(/^\/([^/?]+)/);
+          if (match) {
+            videoId = match[1];
+          }
+        } else if (pathname === "/watch" && searchParams.get("v")) {
+          videoId = searchParams.get("v")!;
+        } else if (pathname.startsWith("/embed/")) {
+          const match = pathname.match(/\/embed\/([^/?]+)/);
+          if (match) {
+            videoId = match[1];
+          }
+        }
+
+        if (!videoId) {
+          setErrors((prev) => ({
+            ...prev,
+            share_url: "YouTube URL format not recognized.",
+          }));
+          return;
+        }
       } else {
-        alert("Only TikTok or Facebook URLs are supported.");
+        setErrors((prev) => ({
+          ...prev,
+          share_url: "Only TikTok, Facebook or YouTube URLs are supported.",
+        }));
         return;
       }
     } catch {
@@ -205,32 +239,6 @@ export default function AddNewsModal({
               {errors.caption && (
                 <p className="text-red-500 text-sm">{errors.caption}</p>
               )}
-
-              {/* <div className="flex flex-col gap-2">
-                <label className="text-sm font-medium text-gray-700">
-                  Select Date
-                </label>
-                <input
-                  type="date"
-                  value={
-                    form.date && !isNaN(Date.parse(form.date))
-                      ? new Date(form.date).toISOString().split("T")[0]
-                      : ""
-                  }
-                  onChange={(e) => {
-                    const newDate = new Date(e.target.value).toLocaleDateString(
-                      "en-US",
-                      {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      }
-                    );
-                    setForm((prev) => ({ ...prev, date: newDate }));
-                  }}
-                  className="border px-4 py-2 rounded text-sm w-full focus:ring-cyan-400"
-                />
-              </div> */}
             </div>
             <div className="flex justify-end gap-3 pt-4">
               <button
