@@ -4,8 +4,9 @@ import Masonry from "react-masonry-css";
 import { useEffect, useState } from "react";
 import TikTokCard from "./tiktokCard";
 import NewsCard from "./newsCard";
+import YouTubeCard from "./YoutubeCard";
 interface SocialItem {
-  type: "facebook" | "tiktok" | "news";
+  type: "facebook" | "tiktok" | "news" | "youtube";
   id_socialMedia: string;
   caption: string;
   date: string;
@@ -25,11 +26,18 @@ const DataList = () => {
 
       if (response.ok) {
         const json = await response.json();
+        console.log("Fetched data:", json);
         const enhancedData = (json as SocialItem[]).map((item) => {
           if (item.type === "tiktok") {
             return {
               ...item,
               video_display: `https://www.tiktok.com/player/v1/${item.id_socialMedia}?autoplay=0&loop=1`,
+            };
+          } else if (item.type === "youtube") {
+            console.log("YouTube ID:", item.id_socialMedia);
+            return {
+              ...item,
+              video_display: `https://www.youtube.com/embed/${item.id_socialMedia}`,
             };
           }
           return item;
@@ -90,11 +98,7 @@ const DataList = () => {
                 imageUrl={item.image_url}
               />
             );
-          } else if (
-            item.type === "facebook" ||
-            item.type === "news" ||
-            item.type === "youtube"
-          ) {
+          } else if (item.type === "facebook" || item.type === "news") {
             return (
               <NewsCard
                 key={index}
@@ -102,6 +106,17 @@ const DataList = () => {
                 caption={item.caption}
                 date={item.date}
                 shareUrl={item.link_share}
+              />
+            );
+          } else if (item.type === "youtube") {
+            return (
+              <YouTubeCard
+                key={index}
+                videoUrl={item.video_display}
+                caption={item.caption}
+                date={item.date}
+                share_url={item.link_share}
+                imageUrl={item.image_url}
               />
             );
           } else {
