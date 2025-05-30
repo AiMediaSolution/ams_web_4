@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI Media solutions",
+  title: "MUSIC & ENTERTAINMENT",
   description: "",
   icons: {
     icon: "/images/favicon.ico",

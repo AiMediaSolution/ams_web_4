@@ -9,10 +9,10 @@ const Footer = () => {
           <div>
             <Link href="/" className="inline-block mb-4">
               <div className="flex items-center">
-                <div className="relative h-24 w-48 mr-2">
+                <div className="relative w-[200px] h-[100px]">
                   <Image
-                    src="/images/footer-logo1-removebg-preview.png"
-                    alt="Ai Media Solution Logo"
+                    src="/images/ANS_logo.png"
+                    alt="Music & Entertainment Logo"
                     fill
                     className="object-contain"
                   />
@@ -156,7 +156,7 @@ const Footer = () => {
         </div>
         <div className="border-t border-gray-800 pt-4 mt-6">
           <p className="text-sm  text-center">
-            © AI Media Solution, Inc. All Rights Reserved.
+            © Music & Entertainment, Inc. All Rights Reserved.
           </p>
         </div>
       </div>

@@ -83,7 +83,7 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
           >
-            AI MEDIA SOLUTION
+            MUSIC & ENTERTAINMENT
           </motion.h1>
           <motion.p
             className="text-lg md:text-xl mb-8"
@@ -91,8 +91,8 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7 }}
           >
-            Ai Media Solution allows current YouTube channel owners as well as
-            new video creators to expand their views and revenues.
+            Music & Entertainment allows current YouTube channel owners as well
+            as new video creators to expand their views and revenues.
           </motion.p>
           <motion.div
             className="text-primary-foreground flex gap-3 items-center justify-center text-3xl"

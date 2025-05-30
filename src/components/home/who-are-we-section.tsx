@@ -67,7 +67,7 @@ const WhoAreWeSection = () => {
             viewport={{ once: true, amount: 0.3 }}
             className="ml-auto flex items-start justify-center md:justify-center max-sm:mx-auto"
           >
-            <CircularText text="AI MEDIA SOLUTION • AMS •" />
+            <CircularText text="MUSIC & ENTERTAINMENT• ANS •" />
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -92,7 +92,7 @@ const WhoAreWeSection = () => {
         className="w-full mt-24 md:mt-30 max-sm:mt-10 max-sm:px-6 text-justify"
       >
         <p className="text-gray-700 mb-6 mx-auto font-medium text-lg md:text-base">
-          Ai Media Solution is one of the biggest YouTube MCN (Multi-Channel
+          Music & Entertainment is one of the biggest YouTube MCN (Multi-Channel
           Network) in the Region. As a leader in innovation and global impact,
           we set the gold standard for excellence and growth, distributing
           content across 130+ networks in 240 countries. We empower publishers

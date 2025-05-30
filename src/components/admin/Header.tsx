@@ -66,7 +66,7 @@ export default function Header() {
               className="w-full h-full object-cover"
             />
           </div>
-          <span className="text-sm font-medium">Admin AMS</span>
+          <span className="text-sm font-medium">Admin ANS</span>
           <MdExpandMore
             className={`text-xl transition-transform ${
               openDropdown ? "rotate-180" : ""
@@ -77,7 +77,7 @@ export default function Header() {
         {openDropdown && (
           <div className="absolute right-0 mt-2 z-40 w-[260px] p-3 flex flex-col rounded-xl border border-gray-200 bg-white shadow-theme-lg dark:bg-gray-dark dark:border-gray-800">
             <div className="mb-3">
-              <p className="font-semibold text-sm">Admin AMS</p>
+              <p className="font-semibold text-sm">Admin ANS</p>
               <p className="text-sm text-gray-500">admin@email.com</p>
             </div>
 

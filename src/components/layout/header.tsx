@@ -46,7 +46,7 @@ const Header = () => {
               className="relative w-full h-full"
             >
               <Image
-                src="/images/footer-logo1-removebg-preview.png"
+                src="/images/ANS_noname.png"
                 alt="Logo"
                 fill
                 className="object-contain"
@@ -55,12 +55,10 @@ const Header = () => {
           </div>
           {!scrolled && (
             <span className="ml-2 font-bold text-xl hidden sm:inline-block">
-              AI Media Solution
+              Music & Entertainment
             </span>
           )}
         </Link>
-
-        {/* Desktop nav */}
         <nav className="hidden md:flex space-x-8">
           {navLinks.map((link) => (
             <Link

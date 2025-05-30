@@ -40,17 +40,17 @@ export default function DigitalDistributionPage() {
           <div className="md:col-span-3">
             <h2 className="text-xl md:text-2xl font-bold text-blue-700 flex flex-wrap gap-2 items-center mb-4">
               <a href="#" className="no-underline text-blue-700">
-                AI MEDIA SOLUTION (Music Distribution)
+                MUSIC & ENTERTAINMENT (Music Distribution)
               </a>
               <span className="text-black font-semibold">
-                : AI MEDIA SOLUTION
+                : MUSIC & ENTERTAINMENT
               </span>
             </h2>
             <p className="text-gray-700 text-base leading-relaxed font-medium text-justify">
-              <strong>AI MEDIA SOLUTION&rsquo;s</strong> boutique digital music
-              distribution service,{" "}
+              <strong>MUSIC & ENTERTAINMENT&rsquo;s</strong> boutique digital
+              music distribution service,{" "}
               <a href="#" className="text-blue-700 no-underline font-semibold">
-                Ai Media Solution (Music Distribution)
+                MUSIC & ENTERTAINMENT (Music Distribution)
               </a>{" "}
               &ndash; As a music distribution and label services company, always
               accompanies and helps artists so they can achieve their goals in
@@ -62,7 +62,7 @@ export default function DigitalDistributionPage() {
           <div>
             <h3 className="text-lg font-semibold text-gray-800 mb-6">
               <a href="#" className="text-blue-700">
-                Ai Media Solution (Music Distribution)
+                MUSIC & ENTERTAINMENT (Music Distribution)
               </a>{" "}
               flies your albums to:
             </h3>

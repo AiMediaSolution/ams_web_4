@@ -30,7 +30,7 @@ export default function YouTubeNetworkPage() {
 
         <div className="max-w-5xl mx-auto text-center pt-12 sm:pt-16">
           <h2 className="text-xl sm:text-3xl md:text-4xl font-bold leading-tight">
-            AI MEDIA SOLUTION YOUTUBE CONTENT <br /> CREATORS NETWORK
+            MUSIC & ENTERTAINMENT YOUTUBE CONTENT <br /> CREATORS NETWORK
           </h2>
           <div className="flex justify-center items-center gap-2 mt-3 mb-6">
             <span className="w-20 sm:w-28 md:w-32 h-[1px] bg-[#333333]"></span>
@@ -39,7 +39,9 @@ export default function YouTubeNetworkPage() {
           </div>
 
           <p className="text-gray-700 text-sm sm:text-base max-w-3xl mx-auto mb-3 leading-relaxed text-justify">
-            <strong>Ai Media Solution Youtube Content Creators Network</strong>{" "}
+            <strong>
+              Music & Entertainment Youtube Content Creators Network
+            </strong>{" "}
             is a collection of over 500,000 videos that have served over 10
             Billion hours of video under{" "}
             <strong>our Managed CMS and Publishing CMS</strong>. Trending
@@ -92,7 +94,7 @@ export default function YouTubeNetworkPage() {
             <div className="md:col-span-2">
               <div className="pb-4">
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 relative inline-block pb-2">
-                  AI MEDIA SOLUTION RIGHTS MANAGEMENT SOLUTION
+                  MUSIC & ENTERTAINMENT RIGHTS MANAGEMENT SOLUTION
                   <span className="absolute left-0 bottom-0 w-20 sm:w-28 md:w-40 h-[3px] bg-cyan-400 mt-4"></span>
                 </h2>
               </div>
@@ -127,9 +129,9 @@ export default function YouTubeNetworkPage() {
                 />
               </div>
               <p className="text-gray-600 text-sm sm:text-base max-w-md">
-                <strong>Ai Media Solution</strong> under one group, we provide
-                multi-solutions and optimize revenue on digital platforms and
-                YouTube.
+                <strong>Music & Entertainment</strong> under one group, we
+                provide multi-solutions and optimize revenue on digital
+                platforms and YouTube.
               </p>
             </div>
           </div>

@@ -39,7 +39,7 @@ export default function Header() {
               className="w-full h-full object-cover"
             />
           </div>
-          <span className="text-sm font-medium">Admin AMS</span>
+          <span className="text-sm font-medium">Admin ANS</span>
         </div>
       </div>
     </header>
