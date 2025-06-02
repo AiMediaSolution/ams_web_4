@@ -20,43 +20,65 @@ const DataList = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/data`, {
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/data`;
+      if (!process.env.NEXT_PUBLIC_API_URL) {
+        console.warn("Biến môi trường NEXT_PUBLIC_API_URL chưa được cấu hình.");
+        return;
+      }
+
+      const response = await fetch(url, {
         method: "GET",
+      }).catch((err) => {
+        console.error("Fetch failed (CORS?):", err.message || err);
+        return null;
       });
 
-      if (response.ok) {
-        const json = await response.json();
-        console.log("Fetched data:", json);
-        const enhancedData = (json as SocialItem[]).map((item) => {
+      if (!response || !response.ok) {
+        console.warn("Response not OK or null (CORS fail?)");
+        return;
+      }
+
+      const json = await response.json().catch((err) => {
+        console.error("JSON parse error:", err.message || err);
+        return null;
+      });
+
+      if (!json) {
+        console.warn("No valid JSON data received");
+        return;
+      }
+
+      const enhancedData = (json as SocialItem[]).map((item) => {
+        try {
           if (item.type === "tiktok") {
             return {
               ...item,
               video_display: `https://www.tiktok.com/player/v1/${item.id_socialMedia}?autoplay=0&loop=1`,
             };
           } else if (item.type === "youtube") {
-            console.log("YouTube ID:", item.id_socialMedia);
             return {
               ...item,
               video_display: `https://www.youtube.com/embed/${item.id_socialMedia}`,
             };
           }
           return item;
-        });
-        setData(enhancedData);
-      } else {
-        if (response.status === 401) {
+        } catch (mapError) {
           console.error(
-            "Access forbidden: You do not have the required permissions."
+            "Error mapping item:",
+            mapError instanceof Error ? mapError.message : mapError,
+            item
           );
-        } else {
-          console.error("Failed to fetch accounts");
+          return item;
         }
-      }
+      });
+
+      setData(enhancedData);
     } catch (err) {
-      setError("Failed to load data.");
-      console.error(err);
+      console.error("Fetch error:", err instanceof Error ? err.message : err);
+      setError("An error occurred while loading data.");
     }
   };
+
   const breakpointColumnsObj = {
     default: 6,
     1536: 5,

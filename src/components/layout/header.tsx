@@ -37,7 +37,7 @@ const Header = () => {
         <Link href="/" className="flex items-center">
           <div
             className={`relative transition-all duration-700 ${
-              scrolled ? "h-16 w-16" : "h-24 w-24"
+              scrolled ? "h-20 w-20" : "h-28 w-28"
             }`}
           >
             <motion.div
@@ -46,7 +46,7 @@ const Header = () => {
               className="relative w-full h-full"
             >
               <Image
-                src="/images/ANS_noname.png"
+                src="/images/main_logo_ANS(stroke_noname).png"
                 alt="Logo"
                 fill
                 className="object-contain"
